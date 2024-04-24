@@ -1,0 +1,68 @@
+<Button>:
+    font_size: 20
+    
+<Label>:
+    color: 1, 1, 1, 1
+    font_size: 20
+    halign: "center"
+    valign: "middle"
+
+<TextInput>:
+    font_size: 20
+    multiline: False
+    halign: "center"
+    valign: "middle"
+
+<TelaPrincipal>:
+
+    orientation: "vertical"
+    spacing: 20
+    size_hint: 0.8, 1
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    padding: 0, 0, 0, 20
+    
+        
+    Label:
+        text: "Olá, seja bem vindo ao nosso super mega melhor de bão de tudo app!"
+        size_hint: 0.8, 3
+        text_size: self.size
+        pos_hint: {"center_x": 0.5, "top": 0.9}
+
+    
+    Button:
+        text: "Garçom"
+
+    Button:
+        text: "Cozinheiro"
+
+    Button:
+        text: "Caixa"
+
+<TelaGarcom>:
+
+    orientation: "vertical"
+    spacing: 20
+    size_hint: 0.8, 1
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    padding: 0, 0, 0, 20
+    
+    Label:
+        text: "Tela do Garçom"
+        
+
+    TextInput:
+        hint_text: "Digite o número da mesa"
+        size_hint: 1, None
+        height: 50
+
+    TextInput:
+        hint_text: "Digite o pedido"
+        size_hint: 1, None
+        height: 200
+        multiline: True
+
+    Button:
+        text: "Enviar"
+
+    Button:
+        text: "Voltar"

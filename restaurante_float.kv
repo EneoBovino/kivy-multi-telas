@@ -1,0 +1,65 @@
+<Button>:
+    font_size: 20
+    size_hint: 0.8, 0.1
+    
+<Label>:
+    color: 1, 1, 1, 1
+    font_size: 20
+    halign: "center"
+    valign: "middle"
+
+<TextInput>:
+    font_size: 20
+    size_hint: 0.8, 0.1
+    multiline: False
+    halign: "center"
+    valign: "middle"
+
+<TelaPrincipal>:
+
+    size_hint: 1, 1
+    
+    Label:
+        text: "Olá, seja bem vindo ao nosso super mega melhor de bão de tudo app!"
+        size_hint: 0.8, 0.3
+        text_size: self.size
+        pos_hint: {"center_x": 0.5, "top": 0.9}
+
+    Button:
+        text: "Garçom"
+        pos_hint: {"center_x": 0.5, "y": 0.01}
+
+    Button:
+        text: "Cozinheiro"
+        pos_hint: {"center_x": 0.5, "y": 0.12}
+
+    Button:
+        text: "Caixa"
+        pos_hint: {"center_x": 0.5, "y": 0.23}
+
+<TelaGarcom>:
+
+    size_hint: 1, 1
+
+    Label:
+        text: "Tela do Garçom"
+        size_hint: 0.8, 0.15
+        text_size: self.size
+        pos_hint: {"center_x": 0.5, "top": 0.95}
+
+    TextInput:
+        hint_text: "Digite o número da mesa"
+        pos_hint: {"center_x": 0.5, "top": 0.75}
+
+    TextInput:
+        hint_text: "Digite o pedido"
+        size_hint: 0.8, 0.3
+        pos_hint: {"center_x": 0.5, "top": 0.6}
+
+    Button:
+        text: "Enviar"
+        pos_hint: {"center_x": 0.5, "y": 0.12}    
+
+    Button:
+        text: "Voltar"
+        pos_hint: {"center_x": 0.5, "y": 0.01}
