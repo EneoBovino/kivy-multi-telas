@@ -1,0 +1,236 @@
+GerenciadorTelas:
+    TelaLogin:
+    TelaPrincipal:
+    TelaGarcom:
+
+<Button>:
+    font_size: 20
+    size_hint: 1, None
+    height: 50
+
+<Label>:
+    color: 1, 1, 1, 1
+    font_size: 20
+    halign: "center"
+    valign: "middle"
+
+<TextInput>:
+    font_size: 20
+    size_hint: 1, None
+    height: 50
+    multiline: False
+
+# <PopupErro>:
+#     id: popup_erro
+#     auto_dismiss: False
+#     size_hint: 0.7, 0.4
+#     pos_hint: {"center_x": 0.5, "center_y": 0.5}
+#     title: "Erro"
+
+#     BoxLayout:
+#         orientation: "vertical"
+
+#         Label:
+#             text: "Usuário ou senha inválidos!"
+#             font_size: 20
+#             size_hint: 1, 0.8
+#             text_size: self.size
+#             halign: "center"
+#             valign: "middle"
+
+#         Button:
+#             text: "Fechar"
+#             on_press: root.dismiss()
+
+
+
+
+
+
+
+
+
+
+<TelaLogin>:
+
+    name: "tela_login"
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "fundo.webp"
+
+    FloatLayout:
+        size_hint: 1, 1
+        # Este canvas permite visualizar a área que o FloatLayout ocupa
+        canvas:
+            Color:
+                rgba: 1, 0, 0, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Bem vindo ao nosso app!\nInsira suas credenciais para acessar o sistema!"
+            size_hint: 0.8, 0.3
+            text_size: self.size
+            pos_hint: {"center_x": 0.5, "top": 0.9}
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 10
+            size_hint: 0.8, 0.4
+            pos_hint: {"center_x": 0.5, "y": 0.1}
+            # Este canvas permite visualizar a área que o BoxLayout ocupa
+            canvas:
+                Color:
+                    rgba: 0, 0, 1, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            TextInput:
+                id: txt_usuario
+                padding_y: 15, 0
+                hint_text: "Digite o usuário"
+                color: 0, 0, 0, 1
+                halign: "center"
+                write_tab: False
+
+            TextInput:
+                id: txt_senha
+                padding_y: 15, 0
+                hint_text: "Digite a senha"
+                password: True
+                color: 0, 0, 0, 1
+                halign: "center"
+                write_tab: False
+
+            Button:
+                text: "Entrar"
+                on_press:
+                    root.autenticar()
+
+            Button:
+                text: "Sair"
+                on_press: app.stop()
+
+<TelaPrincipal>:
+
+    name: "tela_principal"
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "fundo.webp"
+
+    FloatLayout:
+
+        size_hint: 1, 1
+
+        # Este canvas permite visualizar a área que o FloatLayout ocupa
+        # canvas:
+        #     Color:
+        #         rgba: 1, 0, 0, 1
+        #     Rectangle:
+        #         size: self.size
+        #         pos: self.pos
+
+        FloatLayout:
+            size_hint: 0.8, 0.3
+            pos_hint: {"center_x": 0.5, "top": 0.9}
+
+            # Este canvas permite visualizar a área que o FloatLayout ocupa
+            # canvas:
+            #     Color:
+            #         rgba: 0, 0, 1, 1
+            #     Rectangle:
+            #         size: self.size
+            #         pos: self.pos
+
+            Label:
+                text: "Olá, seja bem vindo ao nosso super mega melhor de bão de tudo app!"
+                size_hint: 1, 1
+                text_size: self.size
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        
+        BoxLayout:
+
+            orientation: "vertical"
+            spacing: 10
+            size_hint: 0.8, 0.4
+            pos_hint: {"center_x": 0.5, "y": 0.1}
+
+            # Este canvas permite visualizar a área que o BoxLayout ocupa
+            # canvas:
+            #     Color:
+            #         rgba: 0, 0, 1, 1
+            #     Rectangle:
+            #         size: self.size
+            #         pos: self.pos
+
+            Button:
+                text: "Garçom"
+                pos_hint: {"center_x": 0.5}
+                on_press: root.manager.current = "tela_garcom"
+
+            Button:
+                text: "Cozinheiro"
+                pos_hint: {"center_x": 0.5}
+
+            Button:
+                text: "Caixa"
+                pos_hint: {"center_x": 0.5}
+            
+
+<TelaGarcom>:
+    name: "tela_garcom"
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "fundo.webp"
+
+
+    BoxLayout:
+
+        orientation: "vertical"
+        spacing: 10
+
+        size_hint: 0.8, 0.9
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        TextInput:
+
+            hint_text: "Digite o número da mesa"
+
+        TextInput:
+            
+            hint_text: "Digite o pedido"
+            multiline: True
+            height: 200
+
+        Label:
+
+            text: "Pedido:"
+            valign: "top"
+            text_size: self.size
+
+        Button:
+
+            text: "Enviar pedido"
+
+        Button:
+
+            text: "Voltar"
+            on_press: root.manager.current = "tela_principal"        
