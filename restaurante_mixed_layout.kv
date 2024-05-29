@@ -1,7 +1,12 @@
+#:kivy 1.11.1
+
+#:import Factory kivy.factory.Factory
+
 GerenciadorTelas:
-    TelaLogin:
-    TelaPrincipal:
     TelaGarcom:
+    TelaPrincipal:
+    TelaLogin:
+    TelaCozinha:
 
 <Button>:
     font_size: 20
@@ -20,36 +25,39 @@ GerenciadorTelas:
     height: 50
     multiline: False
 
-# <PopupErro>:
-#     id: popup_erro
-#     auto_dismiss: False
-#     size_hint: 0.7, 0.4
-#     pos_hint: {"center_x": 0.5, "center_y": 0.5}
-#     title: "Erro"
+#:set color_texto_dropdown 0, 0, 0, 1
 
-#     BoxLayout:
-#         orientation: "vertical"
+<SpinnerButton@SpinnerOption>:
+    background_normal: ""
+    background_color: 1, 1, 1, 1
+    color: color_texto_dropdown
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            rectangle: self.x, self.y, self.width, self.height
+            width: 1
 
-#         Label:
-#             text: "Usuário ou senha inválidos!"
-#             font_size: 20
-#             size_hint: 1, 0.8
-#             text_size: self.size
-#             halign: "center"
-#             valign: "middle"
+# Código do popup implementado no kv
+<PopupErro>:
+    id: popup_erro
+    auto_dismiss: False
+    size_hint: 0.7, 0.4
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    title: "Erro de Autenticação"
 
-#         Button:
-#             text: "Fechar"
-#             on_press: root.dismiss()
+    BoxLayout:
+        orientation: "vertical"
 
+        Label:
+            id: lbl_popup
+            text: "Usuário ou senha inválidos!"
+            size_hint: 1, 0.8
+            text_size: self.size
 
-
-
-
-
-
-
-
+        Button:
+            text: "Fechar"
+            on_press: root.dismiss()
 
 <TelaLogin>:
 
@@ -184,12 +192,12 @@ GerenciadorTelas:
             Button:
                 text: "Cozinheiro"
                 pos_hint: {"center_x": 0.5}
+                on_press: root.manager.current = "tela_cozinha"
 
             Button:
                 text: "Caixa"
                 pos_hint: {"center_x": 0.5}
             
-
 <TelaGarcom>:
     name: "tela_garcom"
 
@@ -203,34 +211,197 @@ GerenciadorTelas:
 
 
     BoxLayout:
-
+        id: main_box
         orientation: "vertical"
         spacing: 10
-
         size_hint: 0.8, 0.9
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-        TextInput:
+        Spinner:
+            text: 'Mesa'
+            values: '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
 
-            hint_text: "Digite o número da mesa"
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, None
+            height: 30
 
-        TextInput:
+            canvas.before:
+                Color:
+                    rgba: 0.5, 0.5, 0.5, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            Label:
+                text: "Bar"
+
+            CheckBox:
+                id: radio_bar
+                active: True
+                group: "pedido"
+                allow_no_selection: False
+                on_active: root.atualiza_lista_cardapio()
+
+            Label:
+                text: "Cozinha"
+
+            CheckBox:
+                id: radio_cozinha
+                active: False
+                group: "pedido"
+                allow_no_selection: False
+                on_active: root.atualiza_lista_cardapio()
+        
+        BoxLayout:
+            orientation: "horizontal"
+
+            Button:
+                text: "-"
+                on_press: root.decrementa_qtd_item()
+
+            TextInput:
+                id: qtd_item
+                text: "0"
+
+            Button:
+                text: "+"
+                on_press: root.incrementa_qtd_item()
+        
+        Spinner:
+            id: itens_cardapio
+            text: 'Selecione'
+            values: root.cardapio_itens
+
+
+        # BoxLayout:
+        #     orientation: "horizontal"
+        #     spacing: 10
+        #     size_hint: 1, None
+        #     height: 50
+
+            # Spinner:
+            #     id: mesa_id
+            #     text: 'Mesa'
+            #     values: root.mesas
+
+            # Button to decrement the value
+            # Button:
+            #     text: "-"
+            #     on_press: root.decrementa_qtd_item()
+
+            # Label to display the value
+            # Label:
+            #     id: qtd_item
+            #     text: "0"
+            #     size_hint: 0.2, None
+            #     height: 50
+            #     halign: "center"
+            #     valign: "middle"
+
+            # Button to increment the value
+            # Button:
+            #     text: "+"
+            #     on_press: root.incrementa_qtd_item()
             
-            hint_text: "Digite o pedido"
-            multiline: True
-            height: 200
+            # TextInput:
+            #     id: qtd_item
+            #     size_hint: 0.2, None
+            #     hint_text: "00"
+            #     padding_y: 15, 0
 
+        
+            # Spinner:
+            #     text: 'Selecione'
+            #     values: 'Cerveja', 'Refrigerante', 'Água', 'Suco'
+
+        # BoxLayout:
+        #     orientation: "horizontal"
+        #     spacing: 10
+        #     size_hint: 1, None
+        #     height: 30
+
+        #     canvas:
+        #         Color:
+        #             rgba: 0.5, 0.5, 0.5, 1
+        #         Rectangle:
+        #             size: self.size
+        #             pos: self.pos
+
+        #     Label:
+        #         text: "Bar"
+        #         font_size: 20
+
+        #     CheckBox:
+        #         id: bar
+        #         group: "pedido"
+        #         active: True
+        #         allow_no_selection: False
+        #         on_active: root.atualiza_lista_cardapio()
+
+        #     Label:
+        #         text: "Cozinha"
+        #         font_size: 20
+
+        #     CheckBox:
+        #         id: cozinha
+        #         group: "pedido"
+        #         allow_no_selection: False
+        #         on_active: root.atualiza_lista_cardapio()
+        
+        # Spinner:
+        #     id: itens_cardapio
+        #     text: 'Selecione'
+        #     color: 0, 0, 0, 1
+        #     values: root.cardapio_itens
+        #     option_cls: Factory.get("SpinnerButton")
+        #     background_color: 1, 1, 1, 1
+        #     background_down: ""
+        #     background_normal: ""
+        #     on_text:
+        #         print("The spinner {} has text {}".format(self, self.text))
+
+        Button:
+            text: "Adiciona item"
+            on_press:
+                root.inclui_pedido_na_lista()
+        
         Label:
-
+            id: lista_itens
             text: "Pedido:"
             valign: "top"
             text_size: self.size
 
         Button:
-
             text: "Enviar pedido"
+            on_press:
+                root.enviar_pedido()
 
         Button:
-
             text: "Voltar"
             on_press: root.manager.current = "tela_principal"        
+
+<TelaCozinha>:
+    name: "tela_cozinha"
+
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "fundo.webp"
+
+ 
+
+        # ScrollView:
+        #     do_scroll_x: False
+        #     do_scroll_y: True
+
+        #     FloatLayout:
+        #         id: lista_pedidos
+        #         size_hint_y: None
+
+
+            
+                
