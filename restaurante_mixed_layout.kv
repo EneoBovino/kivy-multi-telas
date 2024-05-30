@@ -225,6 +225,7 @@ GerenciadorTelas:
             pos_hint: {"center_x": 0.5, "top": 1}
             # Seleção da Mesa
             Spinner:
+                id: mesa_id
                 text: 'Mesa'
                 values: '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
 
@@ -298,8 +299,8 @@ GerenciadorTelas:
             # Adiciona item
             Button:
                 text: "Adiciona item"
-                # on_press:
-                #     root.inclui_pedido_na_lista()
+                on_press:
+                    root.inclui_pedido_na_lista()
             
         # Lista de itens
         Label:
@@ -319,8 +320,8 @@ GerenciadorTelas:
             # Enviar pedido
             Button:
                 text: "Enviar pedido"
-                # on_press:
-                #     root.enviar_pedido()
+                on_press:
+                    root.enviar_pedido()
 
             # Voltar
             Button:

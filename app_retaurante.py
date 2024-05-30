@@ -78,8 +78,16 @@ class TelaGarcom(Screen):
         conn.close()
         self.cardapio_itens = [item[1] for item in self.cardapio if item[5] == 'Bar']
         ##########
+        self.pedido_mesa = {
+            "mesa": "",
+            "cozinha": [],
+            "bar": [],
+            "status": "pendente"
+        }
+        
+        
+        
         self.mesas = [str(i) for i in range(1, 11)]
-        self.pedido_mesa = {"mesa": "", "cozinha": [], "bar": [], "status": "pendente"}
         self.mesa_id = ""
     
     def atualiza_lista_cardapio(self):
@@ -90,10 +98,6 @@ class TelaGarcom(Screen):
 
         self.ids.itens_cardapio.text = "Selecione"
 
-
-
-
-
     def decrementa_qtd_item(self):
         if int(self.ids.qtd_item.text) > 0:
             self.ids.qtd_item.text = str(int(self.ids.qtd_item.text) - 1)
@@ -101,29 +105,40 @@ class TelaGarcom(Screen):
     def incrementa_qtd_item(self):
         self.ids.qtd_item.text = str(int(self.ids.qtd_item.text) + 1)
 
- 
     def inclui_pedido_na_lista(self):
-        if self.ids.mesa_id.text == "Mesa":
-            return
         qtd = self.ids.qtd_item.text
         pedido = self.ids.itens_cardapio.text
-        if pedido == "Selecione":
+        if qtd == "0" or pedido == "Selecione":
             return
-        if qtd == "0":
+        if self.ids.mesa_id.text == "Mesa":
             return
-        if self.ids.bar.active:
-            self.pedido_mesa["bar"].append(f"{qtd} - {pedido}")
-        elif self.ids.cozinha.active:
-            self.pedido_mesa["cozinha"].append(f"{qtd} - {pedido}")
-        self.ids.lista_itens.text += f"\n{qtd} - {pedido}"
+
         self.ids.qtd_item.text = "0"
         self.ids.itens_cardapio.text = "Selecione"
+
+        self.ids.itens_pedido.text += f"\n{qtd} - {pedido}"
+
+        self.pedido_mesa["mesa"] = self.ids.mesa_id.text
+
+        if self.ids.radio_bar.active:
+            self.pedido_mesa["bar"].append(f"{qtd} - {pedido}")
+        elif self.ids.radio_cozinha.active:
+            self.pedido_mesa["cozinha"].append(f"{qtd} - {pedido}")
+
         print(self.pedido_mesa)
 
+
     def enviar_pedido(self):
-        url = 'http://localhost:5500/restaurante/criar_pedido'
-        self.pedido_mesa["mesa"] = self.ids.mesa_id.text
+        url = 'http://cf9d-168-232-136-83.ngrok-free.app/restaurante/criar_pedido'
         resposta = requests.post(url, json=self.pedido_mesa)
+        
+        
+        
+        
+        
+        
+        
+        
         if resposta.status_code == 201:
             popup = PopupErro()
             popup.title = "Pedido enviado"
